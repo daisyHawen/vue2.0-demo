@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+</head>
+
+<body>
+   <!--  <div id="app">
+        <input type="" name="" v-model="ParentMsg">
+        <my-component v-show="display" v-bind:parentmsg="ParentMsg">
+        </my-component>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <p>{{ total}}</p>
+    </div> -->
+    <div id="app2">
+        <currency-input label="Price" v-model="price"></currency-input>
+        <currency-input label="Shipping" v-model="shipping"></currency-input>
+        <currency-input label="Handling" v-model="handling"></currency-input>
+        <currency-input label="Discount" v-model="discount"></currency-input>
+        <p>Total: ${{ total }}</p>
+    </div>
+    <template id="myComponent">
+        <div>
+            <h2 v-show="display">{{msg}}</h2>
+            <p>{{parentmsg}}</p>
+            <p>{{childprops}}</p>
+            <button @click="showMsg">Show Message</button>
+        </div>
+    </template>
+</body>
+<script type="text/javascript" src="../dist/vue.js"></script>
+<script type="text/javascript" src="../dist/vue-router.js"></script>
+<script type="text/javascript">
+Vue.component('currency-input', {
+  template: '\
+    <div>\
+      <label v-if="label">{{ label }}</label>\
+      $\
+      <input\
+        ref="input"\
+        v-bind:value="value"\
+        v-on:input="updateValue($event.target.value)"\
+        v-on:focus="selectAll"\
+      >\
+    </div>\
+  ',
+  props: {
+    value: {
+      // type: Number,
+      default: 0
+    },
+    label: {
+      // type: String,
+      default: ''
+    }
+  },
+  mounted: function () {
+    // this.formatValue()
+  },
+  methods: {
+    updateValue: function (value) {
+      this.$emit('input', value)
+    },
+    selectAll: function (event) {
+      setTimeout(function () {
+        event.target.select()
+      }, 0)
+    }
+  }
+})
+
+new Vue({
+  el: '#app2',
+  data: {
+    price: 0,
+    shipping: 0,
+    handling: 0,
+    discount: 0
+  },
+  computed: {
+    total: function () {
+      return ((
+        this.price * 100 + 
+        this.shipping * 100 + 
+        this.handling * 100 - 
+        this.discount * 100
+      ) / 100).toFixed(2)
+    }
+  }
+})
+// Vue.component('button-counter', {
+//     template: '<button v-on:click="increment">{{counter}}</button>',
+//     data: function() {
+//         return {
+//             counter: 0
+//         }
+//     },
+//     methods: {
+//         increment: function() {
+//             alert("increment")
+//             this.counter += 1;
+//             this.$emit('increment');
+//         }
+//     }
+// })
+// new Vue({
+//     el: '#app',
+//     data: {
+//         display: true,
+//         ParentMsg: "Hello This is Parent",
+//         total: 0
+//     },
+//     methods: {
+//         incrementTotal: function() {
+//             alert("incrementTotal")
+//             this.total += 1;
+//         }
+//     },
+//     components: {
+//         'my-component': {
+//             template: '#myComponent',
+//             props: ['parentmsg'],
+//             data: function() {
+//                 return {
+//                     msg: 'This is a Component!',
+//                     childprops: "child:" + this.parentmsg,
+//                     display: false //Vue中component的data必须通过function() return
+//                 }
+//             },
+//             methods: {
+//                 showMsg: function() {
+//                     alert(this.msg);
+//                 }
+//             }
+//         }
+//     }
+// })
+</script>
+
+</html>

@@ -1,3 +1,4 @@
+/*定义模板，可以从其他地方引进来啊*/
 var Foo = {
 	template: '<div>foo</div>'
 }

@@ -6,13 +6,7 @@
 
 <script>
 import Hello from './components/Hello.vue'
-// export default {
-//   data () {
-//     return {
-//       msg: 'Hello Vue!'
-//     }
-//   }
-// }
+
 
 export default {
  components:{Hello}
